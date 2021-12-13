@@ -407,20 +407,40 @@ class QRcodeFactory
 	{
 		$qrcodeData = $this->getQRcodeHtmlData();
 
-		echo $qrcodeData;
-	}
-
-	public function renderPNG()
-	{
-		$qrcodeData = $this->getQRcodePngData();
+		header('Content-Type: text/html');
+		header('Content-Length: ' . strlen($qrcodeData));
+		header('Cache-Control: no-cache');
+		header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
 
 		echo $qrcodeData;
 	}
 
-	public function renderSVG()
+	public function renderPNG($raw = true)
 	{
-		$qrcodeData = $this->getQRcodeSvgData();
+		if ($raw) {
+			$qrcodeData = $this->getQRcodePngData();
+		} else {
+			$qrcodeData = $this->getQRcodePngData();
+			header('Content-Type: image/png');
+			header('Content-Length: ' . strlen($qrcodeData));
+			header('Cache-Control: no-cache');
+			header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+		}
 
+		echo $qrcodeData;
+	}
+
+	public function renderSVG($raw = true)
+	{
+		if($raw){
+			$qrcodeData = $this->getQRcodeSvgData();
+		}else{
+			$qrcodeData =	$this->getQRcodeSvgData();
+			header('Content-Type: image/svg+xml');
+			header('Content-Length: ' . strlen($qrcodeData));
+			header('Cache-Control: no-cache');
+			header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+		}
 		echo $qrcodeData;
 	}
 }

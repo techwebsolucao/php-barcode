@@ -26,21 +26,21 @@ class BarcodeFactory
 	public function __set($name, $value)
 	{
 		$setter = 'set' . $name;
-        if (method_exists($this, $setter)) {
-            // set property
-            $this->$setter($value);
+		if (method_exists($this, $setter)) {
+			// set property
+			$this->$setter($value);
 
-            return;
-         }
+			return;
+		}
 	}
 
 	public function __get($name)
 	{
 		$getter = 'get' . $name;
-        if (method_exists($this, $getter)) {
-            // read property
-            return $this->$getter();
-        }
+		if (method_exists($this, $getter)) {
+			// read property
+			return $this->$getter();
+		}
 	}
 
 	public function setAttribute($name, $value)
@@ -123,7 +123,7 @@ class BarcodeFactory
 	public function setRotate($value)
 	{
 		$value = abs($value);
-		if ($value != 0 && $value%90 != 0) return $this;
+		if ($value != 0 && $value % 90 != 0) return $this;
 
 		$this->setAttribute('rotate', $value);
 		return $this;
@@ -154,7 +154,7 @@ class BarcodeFactory
 	{
 		$color = $this->color;
 
-		return '#'.$color;
+		return '#' . $color;
 	}
 
 	public function getRgbColor()
@@ -166,9 +166,9 @@ class BarcodeFactory
 			$g = hexdec(substr($color, 2, 2));
 			$b = hexdec(substr($color, 4, 2));
 		} else {
-			$r = hexdec(substr($color, 0, 1).substr($color, 0, 1));
-			$g = hexdec(substr($color, 1, 1).substr($color, 1, 1));
-			$b = hexdec(substr($color, 2, 1).substr($color, 2, 1));
+			$r = hexdec(substr($color, 0, 1) . substr($color, 0, 1));
+			$g = hexdec(substr($color, 1, 1) . substr($color, 1, 1));
+			$b = hexdec(substr($color, 2, 1) . substr($color, 2, 1));
 		}
 
 		return [$r, $g, $b];
@@ -180,11 +180,11 @@ class BarcodeFactory
 		$rotate = $this->rotate;
 		$color = $this->hexColor;
 
-		if ($rotate == 0 || $rotate%180 == 0) {
+		if ($rotate == 0 || $rotate % 180 == 0) {
 			$w = $this->scale;
 			$h = $this->height;
 
-			$barcodeData = '<div style="font-size:0;position:relative;width:'.($bcd['maxw'] * $w).'px;height:'.($h).'px;">'."\n";
+			$barcodeData = '<div style="font-size:0;position:relative;width:' . ($bcd['maxw'] * $w) . 'px;height:' . ($h) . 'px;">' . "\n";
 			// print bars
 			$x = 0;
 			foreach ($bcd['bcode'] as $k => $v) {
@@ -193,16 +193,16 @@ class BarcodeFactory
 				if ($v['t']) {
 					$y = round(($v['p'] * $h / $bcd['maxh']), 3);
 					// draw a vertical bar
-					$barcodeData .= '<div style="background-color:'.$color.';width:'.$bw.'px;height:'.$bh.'px;position:absolute;left:'.$x.'px;top:'.$y.'px;">&nbsp;</div>'."\n";
+					$barcodeData .= '<div style="background-color:' . $color . ';width:' . $bw . 'px;height:' . $bh . 'px;position:absolute;left:' . $x . 'px;top:' . $y . 'px;">&nbsp;</div>' . "\n";
 				}
 				$x += $bw;
 			}
-			$barcodeData .= '</div>'."\n";
+			$barcodeData .= '</div>' . "\n";
 		} else {
 			$w = $this->height;
 			$h = $this->scale;
 
-			$barcodeData = '<div style="font-size:0;position:relative;width:'.($w).'px;height:'.($bcd['maxw'] * $h).'px;">'."\n";
+			$barcodeData = '<div style="font-size:0;position:relative;width:' . ($w) . 'px;height:' . ($bcd['maxw'] * $h) . 'px;">' . "\n";
 			// print bars
 			$y = 0;
 			foreach ($bcd['bcode'] as $k => $v) {
@@ -211,11 +211,11 @@ class BarcodeFactory
 				if ($v['t']) {
 					$x = round(($v['p'] * $h / $bcd['maxh']), 3);
 					// draw a vertical bar
-					$barcodeData .= '<div style="background-color:'.$color.';width:'.$bw.'px;height:'.$bh.'px;position:absolute;left:'.$x.'px;top:'.$y.'px;">&nbsp;</div>'."\n";
+					$barcodeData .= '<div style="background-color:' . $color . ';width:' . $bw . 'px;height:' . $bh . 'px;position:absolute;left:' . $x . 'px;top:' . $y . 'px;">&nbsp;</div>' . "\n";
 				}
 				$y += $bh;
 			}
-			$barcodeData .= '</div>'."\n";
+			$barcodeData .= '</div>' . "\n";
 		}
 
 		return $barcodeData;
@@ -227,7 +227,7 @@ class BarcodeFactory
 		$rotate = $this->rotate;
 		$color = $this->rgbColor;
 
-		if ($rotate == 0 || $rotate%180 == 0) {
+		if ($rotate == 0 || $rotate % 180 == 0) {
 			$w = $this->scale;
 			$h = $this->height;
 
@@ -290,8 +290,8 @@ class BarcodeFactory
 				throw new \Exception('Incorrect file extension format.');
 
 			$filePath = explode(DIRECTORY_SEPARATOR, $this->file);
-			if (count($filePath) == 1 ) {
-				$savePath = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR.$this->file;
+			if (count($filePath) == 1) {
+				$savePath = dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'tmp' . DIRECTORY_SEPARATOR . $this->file;
 			} else {
 				$savePath = $this->file;
 			}
@@ -313,16 +313,16 @@ class BarcodeFactory
 		$rotate = $this->rotate;
 		$color = $this->hexColor;
 
-		if ($rotate == 0 || $rotate%180 == 0) {
+		if ($rotate == 0 || $rotate % 180 == 0) {
 			$w = $this->scale;
 			$h = $this->height;
 
 			$repstr = array("\0" => '', '&' => '&amp;', '<' => '&lt;', '>' => '&gt;');
-			$barcodeData = '<'.'?'.'xml version="1.0" standalone="no"'.'?'.'>'."\n";
-			$barcodeData .= '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">'."\n";
-			$barcodeData .= '<svg width="'.round(($bcd['maxw'] * $w), 3).'" height="'.$h.'" version="1.1" xmlns="http://www.w3.org/2000/svg">'."\n";
-			$barcodeData .= "\t".'<desc>'.strtr($bcd['code'], $repstr).'</desc>'."\n";
-			$barcodeData .= "\t".'<g id="bars" fill="'.$color.'" stroke="none">'."\n";
+			$barcodeData = '<' . '?' . 'xml version="1.0" standalone="no"' . '?' . '>' . "\n";
+			$barcodeData .= '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">' . "\n";
+			$barcodeData .= '<svg width="' . round(($bcd['maxw'] * $w), 3) . '" height="' . $h . '" version="1.1" xmlns="http://www.w3.org/2000/svg">' . "\n";
+			$barcodeData .= "\t" . '<desc>' . strtr($bcd['code'], $repstr) . '</desc>' . "\n";
+			$barcodeData .= "\t" . '<g id="bars" fill="' . $color . '" stroke="none">' . "\n";
 			// print bars
 			$x = 0;
 			foreach ($bcd['bcode'] as $k => $v) {
@@ -331,22 +331,22 @@ class BarcodeFactory
 				if ($v['t']) {
 					$y = round(($v['p'] * $h / $bcd['maxh']), 3);
 					// draw a vertical bar
-					$barcodeData .= "\t\t".'<rect x="'.$x.'" y="'.$y.'" width="'.$bw.'" height="'.$bh.'" />'."\n";
+					$barcodeData .= "\t\t" . '<rect x="' . $x . '" y="' . $y . '" width="' . $bw . '" height="' . $bh . '" />' . "\n";
 				}
 				$x += $bw;
 			}
-			$barcodeData .= "\t".'</g>'."\n";
-			$barcodeData .= '</svg>'."\n";
+			$barcodeData .= "\t" . '</g>' . "\n";
+			$barcodeData .= '</svg>' . "\n";
 		} else {
 			$w = $this->height;
 			$h = $this->scale;
 
 			$repstr = array("\0" => '', '&' => '&amp;', '<' => '&lt;', '>' => '&gt;');
-			$barcodeData = '<'.'?'.'xml version="1.0" standalone="no"'.'?'.'>'."\n";
-			$barcodeData .= '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">'."\n";
-			$barcodeData .= '<svg width="'.$w.'" height="'.round(($bcd['maxw'] * $h), 3).'" version="1.1" xmlns="http://www.w3.org/2000/svg">'."\n";
-			$barcodeData .= "\t".'<desc>'.strtr($bcd['code'], $repstr).'</desc>'."\n";
-			$barcodeData .= "\t".'<g id="bars" fill="'.$color.'" stroke="none">'."\n";
+			$barcodeData = '<' . '?' . 'xml version="1.0" standalone="no"' . '?' . '>' . "\n";
+			$barcodeData .= '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">' . "\n";
+			$barcodeData .= '<svg width="' . $w . '" height="' . round(($bcd['maxw'] * $h), 3) . '" version="1.1" xmlns="http://www.w3.org/2000/svg">' . "\n";
+			$barcodeData .= "\t" . '<desc>' . strtr($bcd['code'], $repstr) . '</desc>' . "\n";
+			$barcodeData .= "\t" . '<g id="bars" fill="' . $color . '" stroke="none">' . "\n";
 			// print bars
 			$y = 0;
 			foreach ($bcd['bcode'] as $k => $v) {
@@ -355,12 +355,12 @@ class BarcodeFactory
 				if ($v['t']) {
 					$x = round(($v['p'] * $h / $bcd['maxh']), 3);
 					// draw a vertical bar
-					$barcodeData .= "\t\t".'<rect x="'.$x.'" y="'.$y.'" width="'.$bw.'" height="'.$bh.'" />'."\n";
+					$barcodeData .= "\t\t" . '<rect x="' . $x . '" y="' . $y . '" width="' . $bw . '" height="' . $bh . '" />' . "\n";
 				}
 				$y += $bh;
 			}
-			$barcodeData .= "\t".'</g>'."\n";
-			$barcodeData .= '</svg>'."\n";
+			$barcodeData .= "\t" . '</g>' . "\n";
+			$barcodeData .= '</svg>' . "\n";
 		}
 
 		if ($this->file != null) {
@@ -369,8 +369,8 @@ class BarcodeFactory
 				throw new \Exception('Incorrect file extension format.');
 
 			$filePath = explode(DIRECTORY_SEPARATOR, $this->file);
-			if (count($filePath) == 1 ) {
-				$savePath = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR.$this->file;
+			if (count($filePath) == 1) {
+				$savePath = dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'tmp' . DIRECTORY_SEPARATOR . $this->file;
 			} else {
 				$savePath = $this->file;
 			}
@@ -386,19 +386,41 @@ class BarcodeFactory
 	{
 		$barcodeData = $this->getBarcodeHtmlData();
 
-		echo $barcodeData;
-	}
-
-	public function renderPNG()
-	{
-		$barcodeData = $this->getBarcodePngData();
+		header('Content-Type: text/html');
+		header('Content-Length: ' . strlen($barcodeData));
+		header('Cache-Control: no-cache');
+		header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
 
 		echo $barcodeData;
 	}
 
-	public function renderSVG()
+	public function renderPNG($raw = true)
 	{
-		$barcodeData = $this->getBarcodeSvgData();
+
+		if ($raw) {
+			$barcodeData = $this->getBarcodePngData();
+		} else {
+			$barcodeData = $this->getBarcodePngData();
+			header('Content-Type: image/png');
+			header('Content-Length: ' . strlen($barcodeData));
+			header('Cache-Control: no-cache');
+			header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+		}
+
+		echo $barcodeData;
+	}
+
+	public function renderSVG($raw = true)
+	{
+		if ($raw) {
+			$barcodeData = $this->getBarcodeSvgData();
+		} else {
+			$barcodeData = $this->getBarcodeSvgData();
+			header('Content-Type: image/png');
+			header('Content-Length: ' . strlen($barcodeData));
+			header('Cache-Control: no-cache');
+			header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+		}
 
 		echo $barcodeData;
 	}

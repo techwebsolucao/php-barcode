@@ -355,7 +355,7 @@ class PDF417Factory
 		echo $pdf417Data;
 	}
 
-	public function renderPNG()
+	public function renderPNG($raw = true)
 	{
 		$pdf417Data = $this->getPDF417PngData();
 

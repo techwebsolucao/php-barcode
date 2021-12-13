@@ -348,19 +348,41 @@ class DatamatrixFactory
 	{
 		$datamatrixData = $this->getDatamatrixHtmlData();
 
-		echo $datamatrixData;
-	}
-
-	public function renderPNG()
-	{
-		$datamatrixData = $this->getDatamatrixPngData();
+		header('Content-Type: text/html');
+		header('Content-Length: '.strlen($datamatrixData));
+		header('Cache-Control: no-cache');
+		header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
 
 		echo $datamatrixData;
 	}
 
-	public function renderSVG()
+	public function renderPNG($raw = true)
 	{
-		$datamatrixData = $this->getDatamatrixSvgData();
+		if($raw){
+			$datamatrixData = $this->getDatamatrixPngData();
+		}else{
+			$datamatrixData = $this->getDatamatrixPngData();
+			header('Content-Type: image/png');
+			header('Content-Length: ' . strlen($datamatrixData));
+			header('Cache-Control: no-cache');
+			header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+		}
+
+		echo $datamatrixData;
+	}
+
+	public function renderSVG($raw = true)
+	{
+
+		if($raw){
+			$datamatrixData = $this->getDatamatrixSvgData();
+		}else{
+			$datamatrixData = $this->getDatamatrixSvgData();
+			header('Content-Type: image/svg+xml');
+			header('Content-Length: ' . strlen($datamatrixData));
+			header('Cache-Control: no-cache');
+			header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+		}
 
 		echo $datamatrixData;
 	}
