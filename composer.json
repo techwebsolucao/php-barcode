@@ -3,7 +3,6 @@
     "description": "Barcode Generation Package inspired by Nicola Asuni.",
     "keywords": ["barcode","qrcode","QR Code","CODE 128","DATAMATRIX","PDF417","php barcode"],
     "type": "library",
-    "version": "1.0",
     "license": "MIT",
     "authors": [
         {
